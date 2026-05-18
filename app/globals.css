@@ -4,86 +4,147 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================
+   DESIGN TOKENS — Clean Light Theme for School Daily Use
+   ========================================================== */
 :root {
   --font-sarabun: 'Sarabun', sans-serif;
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(226, 232, 240, 0.8);
-  
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --accent: #6366f1;
 
-  /* Status Colors */
-  --status-present: #22c55e;
-  --status-absent: #ef4444;
-  --status-late: #eab308;
-  --status-leave: #3b82f6;
-  --status-sick: #a855f7;
-  
-  --sidebar-width: 260px;
+  /* Backgrounds */
+  --bg-page:      #f0f4f8;       /* soft blue-grey page wash */
+  --bg-sidebar:   #ffffff;       /* pure white sidebar */
+  --bg-card:      #ffffff;       /* white cards */
+  --bg-input:     #f8fafc;       /* near-white inputs */
+
+  /* Borders */
+  --border-light: #e2e8f0;
+  --border-card:  #e8eef5;
+
+  /* Text */
+  --text-primary:   #1e293b;     /* near-black for headings */
+  --text-secondary: #475569;     /* medium slate for body */
+  --text-muted:     #94a3b8;     /* light slate for hints */
+  --text-white:     #ffffff;
+
+  /* Brand — calm sky-blue indigo (easier on eyes than pure purple) */
+  --primary:        #3b7dd8;     /* main blue */
+  --primary-hover:  #2d68c0;
+  --primary-light:  #eff6ff;     /* pale blue tint for active bg */
+  --primary-text:   #1d4ed8;     /* text version */
+
+  /* Status palette — well-separated, WCAG AA contrast */
+  --status-present: #16a34a;   /* green  */
+  --status-absent:  #dc2626;   /* red    */
+  --status-late:    #d97706;   /* amber  */
+  --status-leave:   #2563eb;   /* blue   */
+  --status-sick:    #7c3aed;   /* violet */
+
+  --sidebar-width: 256px;
 }
 
-.dark {
-  --background: #090d16;
-  --foreground: #f8fafc;
-  
-  --card-bg: rgba(15, 23, 42, 0.6);
-  --card-border: rgba(51, 65, 85, 0.5);
-  
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --accent: #818cf8;
+/* ==========================================================
+   BASE ELEMENTS
+   ========================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--text-primary);
+  background: var(--bg-page);
   font-family: var(--font-sarabun);
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Glassmorphism Styles */
+/* ==========================================================
+   CARD / PANEL SYSTEM
+   ========================================================== */
 .glass-panel {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 1px 4px 0 rgba(30, 41, 59, 0.06),
+              0 4px 16px 0 rgba(30, 41, 59, 0.04);
+  border-radius: 1rem;
 }
 
 .glass-card-hover {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s ease;
 }
-
 .glass-card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px 0 rgba(30, 41, 59, 0.10);
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ==========================================================
+   SIDEBAR OVERRIDES — white background, clean separation
+   ========================================================== */
+aside {
+  background: var(--bg-sidebar) !important;
+  border-right: 1px solid var(--border-light) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* ==========================================================
+   FORM INPUTS — crisp white, clear focus ring
+   ========================================================== */
+input[type="text"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: var(--text-primary) !important;
+  border-radius: 0.625rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(59, 125, 216, 0.15) !important;
 }
 
+/* ==========================================================
+   TABLES — cleaner zebra, visible dividers
+   ========================================================== */
+table thead th {
+  color: var(--text-muted) !important;
+  border-bottom: 1.5px solid var(--border-light);
+}
+table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+table tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+/* ==========================================================
+   SCROLLBAR — minimal, barely visible
+   ========================================================== */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
-  border-radius: 4px;
+  background: #cbd5e1;
+  border-radius: 99px;
 }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.5);
-}
-
-/* Status Button Utilities (Specially crafted for Mobile Tap Interactions) */
+/* ==========================================================
+   ATTENDANCE STATUS BUTTONS — large touch targets, vivid colours
+   ========================================================== */
 .btn-status {
   position: relative;
   overflow: hidden;
@@ -91,33 +152,79 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 0.5rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.65rem 0.5rem;
+  border-radius: 0.625rem;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+.btn-status:active { transform: scale(0.94); }
 
-.btn-status:active {
-  transform: scale(0.95);
-}
-
-/* Ripple animation on click */
+/* Ripple */
 .ripple {
   position: absolute;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   transform: scale(0);
-  animation: ripple-effect 0.5s ease-out;
+  animation: ripple-effect 0.45s ease-out forwards;
   pointer-events: none;
 }
-
 @keyframes ripple-effect {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ==========================================================
+   PAGE TRANSITION ANIMATION
+   ========================================================== */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+.animate-fade-in {
+  animation: fade-in-up 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ==========================================================
+   MOBILE-FIRST BOTTOM NAV — light frosted glass
+   ========================================================== */
+nav.mobile-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 -2px 16px rgba(30, 41, 59, 0.07);
+}
+
+/* ==========================================================
+   TOPBAR — white, thin bottom border
+   ========================================================== */
+header.topbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: 0 1px 4px rgba(30, 41, 59, 0.05);
+}
+
+/* ==========================================================
+   UTILITY — text size helpers used across pages
+   ========================================================== */
+.text-xxs   { font-size: 0.7rem;   line-height: 1rem; }
+.text-3xs   { font-size: 0.65rem;  line-height: 0.9rem; }
+.text-4xs   { font-size: 0.6rem;   line-height: 0.85rem; }
+
+/* ==========================================================
+   BADGE — status pills
+   ========================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
 }
