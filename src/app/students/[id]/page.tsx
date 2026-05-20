@@ -145,3 +145,7 @@ export default function StudentProfilePage() {
     </div>
   );
 }
+
+export function generateStaticParams() {
+  return [{ id: 'mock-student-id' }];
+}

@@ -247,3 +247,7 @@ export default function AttendancePage() {
     </div>
   );
 }
+
+export function generateStaticParams() {
+  return [{ id: 'mock-class-id' }];
+}
